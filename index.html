@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AgroMonitor IoT - Fazenda Sustentável | Frutiger Aero</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header com logo e título -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D2FF;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#00FF88;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logoGrad)" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" fill="rgba(0,210,255,0.2)" />
+                        <circle cx="12" cy="12" r="2" fill="#00D2FF" />
+                        <path d="M4 12L12 17L20 12" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" fill="none" />
+                        <path d="M4 17L12 22L20 17" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" fill="none" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>AGROMONITOR</h1>
+                    <p>Painel de Controle - Fazenda Sustentável</p>
+                </div>
+            </div>
+            <div class="agrinho-badge">
+                <span>🌱 Agrinho 2026</span>
+                <strong>1º Ano Médio</strong>
+            </div>
+        </header>
+
+        <!-- Hero Section Frutiger Aero -->
+        <section class="hero">
+            <div class="hero-glow"></div>
+            <div class="hero-content">
+                <h2>🌿 Agro Forte e Sustentável 💙</h2>
+                <p>Monitoramento inteligente com IoT - Dados em tempo real da sua fazenda sustentável. Economize água,
+                    aumente a produtividade e proteja o meio ambiente com tecnologia de ponta.</p>
+            </div>
+            <div class="hero-bubbles">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+            </div>
+        </section>
+
+        <!-- Dashboard Stats Cards - Frutiger Aero Style -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-glow"></div>
+                <div class="stat-icon">💧</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="umidadeValue">0</div>
+                    <div class="stat-label">Umidade do Solo (%)</div>
+                </div>
+                <div class="status-badge" id="umidadeStatus">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-glow"></div>
+                <div class="stat-icon">🌡️</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="tempValue">0</div>
+                    <div class="stat-label">Temperatura (°C)</div>
+                </div>
+                <div class="status-badge" id="tempStatus">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-glow"></div>
+                <div class="stat-icon">💨</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="umidadeArValue">0</div>
+                    <div class="stat-label">Umidade do Ar (%)</div>
+                </div>
+                <div class="status-badge" id="umidadeArStatus">-</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-glow"></div>
+                <div class="stat-icon">☀️</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="energiaValue">0</div>
+                    <div class="stat-label">Energia Solar (kWh)</div>
+                </div>
+                <div class="status-badge" id="energiaStatus">-</div>
+            </div>
+        </section>
+
+        <!-- Gráficos Principais -->
+        <section class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>📊 Umidade do Solo - Últimas 24h</h3>
+                    <button class="btn-refresh" id="refreshUmidade" title="Atualizar dados">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+                        </svg>
+                    </button>
+                </div>
+                <canvas id="umidadeChart" width="400" height="200"></canvas>
+                <div class="chart-insight">
+                    <span class="insight-text" id="umidadeInsight">Carregando análise...</span>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>💧 Nível dos Reservatórios de Água</h3>
+                    <button class="btn-refresh" id="refreshReservatorios" title="Atualizar dados">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+                        </svg>
+                    </button>
+                </div>
+                <canvas id="reservatorioChart" width="400" height="200"></canvas>
+                <div class="chart-insight">
+                    <span class="insight-text" id="reservatorioInsight">Carregando análise...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Previsão do Tempo e Sensores Adicionais -->
+        <section class="weather-section">
+            <div class="weather-card">
+                <h3>🌤️ Previsão do Tempo - Próximos 5 Dias</h3>
+                <div class="weather-grid" id="weatherGrid">
+                    <!-- Previsão será inserida via JS -->
+                </div>
+            </div>
+
+            <div class="sensors-card">
+                <h3>📡 Sensores IoT em Tempo Real</h3>
+                <div class="sensors-grid">
+                    <div class="sensor-item">
+                        <div class="sensor-icon">🌱</div>
+                        <div class="sensor-info">
+                            <span class="sensor-name">Sensor NPK (Solo)</span>
+                            <div class="sensor-values">
+                                <span>N: <strong id="nitrogenio">0</strong> mg/kg</span>
+                                <span>P: <strong id="fosforo">0</strong> mg/kg</span>
+                                <span>K: <strong id="potassio">0</strong> mg/kg</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sensor-item">
+                        <div class="sensor-icon">⚡</div>
+                        <div class="sensor-info">
+                            <span class="sensor-name">Bateria Solar</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="bateriaBar" style="width: 0%"></div>
+                            </div>
+                            <span id="bateriaValue">0%</span>
+                        </div>
+                    </div>
+                    <div class="sensor-item">
+                        <div class="sensor-icon">🔄</div>
+                        <div class="sensor-info">
+                            <span class="sensor-name">Última Atualização</span>
+                            <span id="ultimaAtualizacao">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Sustentabilidade -->
+        <section class="sustainability-section">
+            <div class="sustainability-card">
+                <div class="sustain-glow"></div>
+                <h3>🌍 Impacto Sustentável da Fazenda</h3>
+                <div class="sustainability-stats">
+                    <div class="sustain-item">
+                        <div class="sustain-icon">💧</div>
+                        <div class="sustain-info">
+                            <span class="sustain-value" id="aguaEconomizada">0</span>
+                            <span class="sustain-label">Litros de água economizados</span>
+                        </div>
+                    </div>
+                    <div class="sustain-item">
+                        <div class="sustain-icon">🌳</div>
+                        <div class="sustain-info">
+                            <span class="sustain-value" id="arvoresPlantadas">0</span>
+                            <span class="sustain-label">Árvores plantadas</span>
+                        </div>
+                    </div>
+                    <div class="sustain-item">
+                        <div class="sustain-icon">⚡</div>
+                        <div class="sustain-info">
+                            <span class="sustain-value" id="energiaGerada">0</span>
+                            <span class="sustain-label">kWh de energia solar gerada</span>
+                        </div>
+                    </div>
+                    <div class="sustain-item">
+                        <div class="sustain-icon">🔄</div>
+                        <div class="sustain-info">
+                            <span class="sustain-value" id="co2Evitado">0</span>
+                            <span class="sustain-label">kg de CO₂ evitados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controle Manual (Simulação) -->
+        <section class="control-section">
+            <div class="control-card">
+                <h3>🎮 Simulação de Sensores</h3>
+                <p>Atualize os dados dos sensores para ver o dashboard em ação!</p>
+                <div class="control-buttons">
+                    <button class="btn-control" id="btnSimularDados">🔄 Simular Novos Dados</button>
+                    <button class="btn-control" id="btnDadosReais">🌾 Dados Reais da Fazenda</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h4>Agrinho 2026 - Do Campo à Cidade, Colhendo Oportunidades</h4>
+                    <p>Painel de Monitoramento IoT - 1º Ano do Ensino Médio</p>
+                    <p>Tema: Agro Forte e Sustentável | Tecnologia a serviço do campo</p>
+                </div>
+                <div class="footer-logo">
+                    <p>🌱 AGROMONITOR IOT 🌿</p>
+                    <small>Monitoramento Inteligente para uma Agricultura Sustentável</small>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
